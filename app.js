@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
   btnLogin.addEventListener("click", handleLogin);
   btnLogout.addEventListener("click", handleLogout);
 
-  btnRefreshTrack.addEventListener("click", fetchCurrentlyPlaying);
   btnPlay.addEventListener("click", () => controlPlayer("play"));
   btnPause.addEventListener("click", () => controlPlayer("pause"));
   btnNext.addEventListener("click", () => controlPlayer("next"));
