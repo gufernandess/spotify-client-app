@@ -8,6 +8,7 @@ const apiUrl = "https://api.spotify.com/v1";
 
 let accessToken = null;
 let grantedScopes = null;
+let playbackInterval = null;
 
 const btnLogin = document.getElementById("btn-login");
 const btnLogout = document.getElementById("btn-logout");
@@ -17,7 +18,6 @@ const dashboardSection = document.getElementById("dashboard-section");
 const viewerControls = document.getElementById("viewer-controls");
 const managerControls = document.getElementById("manager-controls");
 
-const btnRefreshTrack = document.getElementById("btn-refresh-track");
 const btnPlay = document.getElementById("btn-play");
 const btnPause = document.getElementById("btn-pause");
 const btnNext = document.getElementById("btn-next");
@@ -95,6 +95,9 @@ async function handleAuthCallback() {
     window.history.replaceState({}, document.title, redirectUri);
 
     updateUI(grantedScopes);
+
+    if (playbackInterval) clearInterval(playbackInterval);
+    playbackInterval = setInterval(fetchCurrentlyPlaying, 5000);
   } catch (error) {
     console.error("Erro ao trocar token:", error);
   }
@@ -136,6 +139,9 @@ function updateUI(scopes) {
 }
 
 function handleLogout() {
+  if (playbackInterval) clearInterval(playbackInterval);
+  playbackInterval = null;
+
   accessToken = null;
   grantedScopes = null;
 
@@ -191,9 +197,17 @@ async function fetchCurrentlyPlaying() {
   try {
     const data = await fetchSpotifyAPI("/me/player/currently-playing");
     if (data && data.item) {
+      const trackName = data.item.name;
+      const artists = data.item.artists.map((a) => a.name).join(", ");
+
+      const imageUrl = data.item.album.images[1]?.url;
+
       currentTrackEl.innerHTML = `
-                <strong>${data.item.name}</strong>
-                <p>por ${data.item.artists.map((a) => a.name).join(", ")}</p>
+                ${imageUrl ? `<img src="${imageUrl}" alt="Capa do álbum ${data.item.album.name}">` : ""}
+                <div class="track-info">
+                    <strong>${trackName}</strong>
+                    <p>por ${artists}</p>
+                </div>
             `;
     } else {
       currentTrackEl.innerHTML = "<p>Nenhuma música tocando.</p>";
