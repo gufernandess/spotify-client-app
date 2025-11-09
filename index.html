@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Spotify PKCE Client</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <header>
+            <h1>SPA Segura com Spotify (PKCE)</h1>
+        </header>
+
+        <main>
+            <section id="login-section">
+                <button id="btn-login">Login com Spotify</button>
+            </section>
+
+            <section id="dashboard-section" class="hidden">
+                <button id="btn-logout">Logout Seguro</button>
+                <hr />
+
+                <div id="viewer-controls" class="hidden">
+                    <h3>🎵 Tocando Agora (Viewer)</h3>
+                    <div id="current-track">
+                        <p>Nenhuma música tocando.</p>
+                    </div>
+                    <button id="btn-refresh-track">Atualizar</button>
+                </div>
+
+                <div id="manager-controls" class="hidden">
+                    <h3>⏯️ Controles (Manager)</h3>
+                    <button id="btn-play">Play</button>
+                    <button id="btn-pause">Pause</button>
+                    <button id="btn-next">Próxima</button>
+                </div>
+            </section>
+        </main>
+
+        <script src="config.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>
