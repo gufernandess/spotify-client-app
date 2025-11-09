@@ -236,9 +236,6 @@ async function controlPlayer(action) {
     setTimeout(fetchCurrentlyPlaying, 500);
   } catch (error) {
     console.error(`Erro ao tentar ${action}:`, error);
-    alert(
-      "Não foi possível executar a ação. Você tem um dispositivo ativo no Spotify?",
-    );
   }
 }
 
